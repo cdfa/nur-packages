@@ -1,0 +1,30 @@
+63,64d62
+< 	console.log("------------------------------------------------------------------")
+< 	console.trace()
+125d122
+< 		console.trace();
+144d140
+< 	console.trace();
+182d177
+< 	console.trace();
+194c189,206
+<     return downloadStream(downloadOpts);
+---
+>     let electron = downloadStream(downloadOpts);
+> 
+>     if (!opts.ffmpegChromium) {
+>       return electron;
+>     }
+> 
+>     electron = electron.pipe(filter(["**", "!**/*ffmpeg.*"]));
+> 
+>     let ffmpeg = downloadStream({
+>       ...downloadOpts,
+>       artifactName: "ffmpeg",
+>     }).pipe(filter("**/*ffmpeg.*"));
+> 
+>     if (opts.platform === "darwin") {
+>       ffmpeg = ffmpeg.pipe(rename(getDarwinLibFFMpegPath(opts)));
+>     }
+> 
+>     return es.merge(electron, ffmpeg);

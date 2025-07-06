@@ -15,6 +15,5 @@
   overlays = import ./overlays; # nixpkgs overlays
 
   fishPlugins.replay-fish = pkgs.fishPlugins.callPackage ./pkgs/fish-replay { };
-  # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
-  # ...
+  vscode-oss = pkgs.callPackage ./pkgs/vscode-oss { };
 }

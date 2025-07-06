@@ -1,0 +1,4 @@
+185c185
+<     validateChecksum: true,
+---
+>     validateChecksum: false,

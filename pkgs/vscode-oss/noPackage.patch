@@ -1,0 +1,13 @@
+diff --git a/build/gulpfile.vscode.js b/build/gulpfile.vscode.js
+index a63f693c95a..96adfab77c5 100644
+--- a/build/gulpfile.vscode.js
++++ b/build/gulpfile.vscode.js
+@@ -489,7 +489,7 @@ BUILD_TARGETS.forEach(buildTarget => {
+ 		const tasks = [
+ 			compileNativeExtensionsBuildTask,
+ 			util.rimraf(path.join(buildRoot, destinationFolderName)),
+-			packageTask(platform, arch, sourceFolderName, destinationFolderName, opts)
++			// packageTask(platform, arch, sourceFolderName, destinationFolderName, opts)
+ 		];
+ 
+ 		if (platform === 'win32') {

@@ -1,0 +1,31 @@
+diff --git a/build/gulpfile.vscode.js b/build/gulpfile.vscode.js
+index a63f693c95a..b7d3cec5302 100644
+--- a/build/gulpfile.vscode.js
++++ b/build/gulpfile.vscode.js
+@@ -487,8 +487,8 @@ BUILD_TARGETS.forEach(buildTarget => {
+ 		const destinationFolderName = `VSCode${dashed(platform)}${dashed(arch)}`;
+
+ 		const tasks = [
+-			compileNativeExtensionsBuildTask,
++			// compileNativeExtensionsBuildTask,
+			util.rimraf(path.join(buildRoot, destinationFolderName)),
+ 			packageTask(platform, arch, sourceFolderName, destinationFolderName, opts)
+ 		];
+
+@@ -500,11 +500,11 @@ BUILD_TARGETS.forEach(buildTarget => {
+ 		gulp.task(vscodeTaskCI);
+
+ 		const vscodeTask = task.define(`vscode${dashed(platform)}${dashed(arch)}${dashed(minified)}`, task.series(
+-			compileBuildTask,
+-			cleanExtensionsBuildTask,
+-			compileNonNativeExtensionsBuildTask,
+-			compileExtensionMediaBuildTask,
+-			minified ? minifyVSCodeTask : bundleVSCodeTask,
++			// compileBuildTask,
++			// cleanExtensionsBuildTask,
++			// compileNonNativeExtensionsBuildTask,
++			// compileExtensionMediaBuildTask,
++			// minified ? minifyVSCodeTask : bundleVSCodeTask,
+ 			vscodeTaskCI
+ 		));
+ 		gulp.task(vscodeTask);
