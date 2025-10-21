@@ -2,6 +2,5 @@
   # Add your NixOS modules here
   #
   # my-module = ./my-module;
-  default = {
-  };
+  zram-writeback = ./zram-writeback.nix;
 }
