@@ -16,4 +16,15 @@
 
   fishPlugins.replay-fish = pkgs.fishPlugins.callPackage ./pkgs/fish-replay { };
   vscode-oss = pkgs.callPackage ./pkgs/vscode-oss { };
+  wallpaperengine-gui = pkgs.callPackage ./pkgs/wallpaperengine-gui.nix { };
+  linux-wallpaperengine = pkgs.linux-wallpaperengine.overrideAttrs {
+    version = "0-unstable-2025-12-09";
+    src = pkgs.fetchFromGitHub {
+      owner = "Almamu";
+      repo = "linux-wallpaperengine";
+      rev = "68d0bd9c157f7b16bc4f66348d69421b38831ffb";
+      fetchSubmodules = true;
+      hash = "sha256-M2ayJjHgMJ3kLEgD06dlbGEMPdR+yT2xwjxjUXdgrXw=";
+    };
+  };
 }
