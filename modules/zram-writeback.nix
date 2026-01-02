@@ -6,7 +6,6 @@
 let
   cfg = config.services.zramWriteback;
   dev = config.zramSwap.writebackDevice;
-  devName = builtins.baseNameOf dev;
 in
 {
   options = {
@@ -15,7 +14,8 @@ in
         default = false;
         type = lib.types.bool;
         description = ''
-          Enable automatic writing of huge_idle pages to the zram writeback device.
+          Enable automatic writing of huge and/or idle pages to the zram writeback device.
+          Marking of idle pages requires the CONFIG_ZRAM_TRACK_ENTRY_ACTIME kernel feature flag.
         '';
       };
 
@@ -42,6 +42,14 @@ in
           The delay on the writeback trigger timer in minutes.
         '';
       };
+
+      zramDevice = lib.mkOption {
+        default = "zram0";
+        type = lib.types.str;
+        description = ''
+          The zram device to enable writeback for.
+        '';
+      };
     };
   };
 
@@ -58,11 +66,11 @@ in
       description = "Mark pages in ${dev} as idle";
       before = ["zram-writeback-pages.service"];
       unitConfig = {
-        ConditionPathExists = "/sys/block/${devName}/idle";
+        ConditionPathExists = "/sys/block/${cfg.zramDevice}/idle";
       };
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = ''${pkgs.bash}/bin/bash -c "echo ${builtins.toString cfg.idleTimeSeconds} > /sys/block/${devName}/idle"'';
+        ExecStart = ''${pkgs.bash}/bin/bash -c "echo ${builtins.toString cfg.idleTimeSeconds} > /sys/block/${cfg.zramDevice}/idle"'';
       };
       startAt = "*:0/${builtins.toString cfg.markIdleFrequencyMinutes}";
     };
@@ -73,13 +81,17 @@ in
       after = ["zram-mark-idle.service"];
       requires = ["zram-mark-idle.service"];
       unitConfig = {
-        ConditionPathExists = "/sys/block/${devName}/writeback";
+        ConditionPathExists = "/sys/block/${cfg.zramDevice}/writeback";
       };
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = ''${pkgs.bash}/bin/bash -c "echo huge_idle > /sys/block/${devName}/writeback"'';
       };
       startAt = "*:0/${builtins.toString cfg.writebackFrequencyMinutes}";
+      script = ''
+        set -eu
+        echo idle > /sys/block/${cfg.zramDevice}/writeback
+        echo huge > /sys/block/${cfg.zramDevice}/writeback
+      '';
     };
   };
 }
