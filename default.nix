@@ -27,4 +27,12 @@
       hash = "sha256-M2ayJjHgMJ3kLEgD06dlbGEMPdR+yT2xwjxjUXdgrXw=";
     };
   };
+  qtpass = pkgs.qtpass.overrideAttrs {
+    src = pkgs.fetchFromGitHub {
+      owner = "trixmoe";
+      repo = "QtPass";
+      rev = "3e0b647fa5bbdc5263e5d95920ae81c1b7ec2812";
+      sha256 = "sha256-rn2hMBA2iS4Bsj7zBRlrr5o/KB4KQb7w7RJVxK3qZts=";
+    };
+  };
 }
