@@ -9,10 +9,6 @@ stdenv.mkDerivation {
   pname = "wallpaperengine-gui";
   version = "1.1.6";
 
-  # src = builtins.fetchgit {
-  #   url = "https://github.com/MikiDevLog/wallpaperengine-gui";
-  #   hash = "sha256-CCif4G+BuCwyHKyMxy6noAAEXERBXrgcgXPWYcFsv+I=";
-  # };
   src = fetchFromGitHub {
     owner = "MikiDevLog";
     repo = "wallpaperengine-gui";

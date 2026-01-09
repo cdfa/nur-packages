@@ -35,4 +35,7 @@
       sha256 = "sha256-rn2hMBA2iS4Bsj7zBRlrr5o/KB4KQb7w7RJVxK3qZts=";
     };
   };
+  kdePackages = {
+    emoji-runner = pkgs.kdePackages.callPackage ./pkgs/emoji-runner.nix { };
+  };
 }
