@@ -16,7 +16,7 @@
 , commandLineArgs ? ""
 }:
 
-(callPackage (toString path + "/pkgs/applications/editors/vscode/generic.nix") rec {
+(callPackage (toString path + "/pkgs/applications/editors/vscode/generic.nix") {} rec {
   version = "1.96.2";
   pname = "vscode-oss";
 
